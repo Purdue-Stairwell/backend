@@ -1,0 +1,16 @@
+{
+	"name": "backend",
+	"version": "0.0.1",
+	"description": "backend files for the Purdue StairWELL project",
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^16.3.1",
+		"redis": "^4.6.8",
+		"socket.io": "^4.7.2"
+	}
+}
