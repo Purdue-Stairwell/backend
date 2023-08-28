@@ -79,6 +79,8 @@ async function popFormData() {
 	if (dataCount > 0) {
 		//grab data from database
 		let data = JSON.parse(await client.RPOP(process.env.REDIS_KEY));
+		//REMOVE BEFORE PUSH, JUST FOR TESTING -----------------------------------------------------------------------------###############
+		client.LPUSH(process.env.REDIS_KEY, JSON.stringify(data));
 		//emit to clients
 		io.emit("backend to visual", data.points, data.who5);
 
