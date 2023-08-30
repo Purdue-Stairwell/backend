@@ -8,10 +8,8 @@ const maxInterval = 3000;
 const minInterval = 1000;
 
 const client = require("redis").createClient(); //database
-const http = require("http");
+const http = require("http").createServer(); //web server
 const port = 3000;
-
-http.createServer();
 
 let interval = maxInterval;
 let timer;
@@ -37,7 +35,7 @@ async function init() {
 	});
 
 	//launch web server
-	http.listen(3000, () => console.log("Listening on port 3000"));
+	http.listen(port, () => console.log("Listening on port " + port + "..."));
 
 	//init starting interval
 	timer = setInterval(popFormData, maxInterval);
