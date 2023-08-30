@@ -11,7 +11,7 @@ const client = require("redis").createClient(); //database
 const http = require("http");
 const port = 3000;
 
-http.createServer().listen(port);
+http.createServer();
 
 let interval = maxInterval;
 let timer;
