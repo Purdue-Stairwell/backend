@@ -27,9 +27,9 @@ async function init() {
 	io.on("connection", (socket) => {
 		console.log("client connected");
 
-		socket.on("frontend to backend", (points, who5) => {
+		socket.on("frontend to backend", (points, who5, sprite, color) => {
 			console.log("frontend to backend", points, who5);
-			let data = { points: points, who5: who5 };
+			let data = { points: points, who5: who5, sprite: sprite, color: color };
 			client.LPUSH(process.env.REDIS_KEY, JSON.stringify(data));
 		});
 	});
@@ -52,7 +52,7 @@ async function popFormData() {
 		//REMOVE BEFORE PUSH, JUST FOR TESTING -----------------------------------------------------------------------------###############
 		client.LPUSH(process.env.REDIS_KEY, JSON.stringify(data));
 		//emit to clients
-		io.emit("backend to visual", data.points, data.who5);
+		io.emit("backend to visual", data.points, data.who5, data.sprite, data.color);
 
 		//adjust interval to match amount of data
 		if (dataCount > minData) {
