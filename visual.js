@@ -4,6 +4,8 @@
 // array of creatues
 let creatures = [];
 
+let sprite_count = 12;
+
 // arrays of sprites
 let tails = [];
 let bodies = [];
@@ -16,11 +18,16 @@ let star_x = [],
 
 // preload images
 function preload() {
-  for (let i = 0; i < 2; i++) {
-  heads[i] = loadSprites("../assets/sprites/heads/", i);
-  bodies[i] = loadSprites("../assets/sprites/bodies/", i);
-  tails[i] = loadSprites("../assets/sprites/tails/", i);
-  }
+  heads.push(loadImage("./assets/sprites/heads/0/0.gif"));
+  heads.push(loadImage("./assets/sprites/heads/1/1.gif"));
+
+  bodies.push(loadImage("./assets/sprites/bodies/0/0.gif"));
+  bodies.push(loadImage("./assets/sprites/bodies/1/1.gif"));
+
+  tails.push(loadImage("./assets/sprites/tails/0/0.gif"));
+  tails.push(loadImage("./assets/sprites/tails/1/1.gif"));
+
+  console.log(heads);
 }
 
 // setup canvas and framerate before drawing
@@ -36,7 +43,7 @@ function draw() {
   background(0);
   space(width, height, 200, 2);
 
-  // draw each creature
+  //draw each creature
   push();
   creatures.forEach((g) => {
     g.update();
@@ -83,10 +90,10 @@ document.addEventListener("click", () => {
         floor(random(200, 255))
       ), // hue
       random(0.0, 1.0), // agitatedness
-      random(0.5, 2), // speed
+      random(0.8, 2.5), // speed
       floor(random(1, 15)), // pointiness
-      random(0.25, 2), // size
-      [floor(random(0, 2)), floor(random(0, 2)), floor(random(0, 2))], // sprites
+      random(0.2, 1.2), // size
+      Math.floor(Math.random() * 2), // sprite
       random(-width / 3, width / 3), // x
       random(-height / 3, height / 3) // y
     )
