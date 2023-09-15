@@ -5,6 +5,7 @@ const redisKey = "stairwell";
 
 //in ms
 const maxInterval = 3000;
+const minInterval = 1000;
 
 const client = require("redis").createClient(); //database
 const http = require("http").createServer(); //web server
