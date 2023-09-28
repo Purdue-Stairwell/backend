@@ -10,7 +10,6 @@ const minInterval = 1000;
 const client = require("redis").createClient(); //database
 const http = require("http").createServer(); //web server
 const port = 3000;
-
 let interval = maxInterval;
 let timer;
 
@@ -21,6 +20,7 @@ const io = require("socket.io")(http, {
 
 //we do a little bit of error checking
 client.on("error", (err) => console.log("Redis Client Error", err));
+
 async function init() {
 	await client.connect();
 
@@ -33,6 +33,8 @@ async function init() {
 			if (!age) {
 				who5 = [3,3,3,3,3];
 			}
+		socket.on("frontend to backend", (points, who5, sprite, color) => {
+			console.log("frontend to backend", points, who5, sprite, color);
 			let data = { points: points, who5: who5, sprite: sprite, color: color };
 			client.LPUSH(process.env.REDIS_KEY, JSON.stringify(data));
 		});
@@ -51,6 +53,7 @@ async function popFormData() {
 	let dataCount = await client.LLEN(process.env.REDIS_KEY);
 
 	if (dataCount > 0) {
+		console.log("Sent to Visual");
 		//grab data from database
 		let data = JSON.parse(await client.RPOP(process.env.REDIS_KEY));
 		//REMOVE BEFORE PUSH, JUST FOR TESTING -----------------------------------------------------------------------------###############
