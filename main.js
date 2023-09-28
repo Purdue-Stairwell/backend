@@ -28,13 +28,10 @@ async function init() {
 		console.log("client connected");
 
 		socket.on("frontend to backend", (points, who5, sprite, color, age) => {
-			console.log("frontend to backend", who5, sprite, color, age);
-			//if age is less than 18, set who5 to 3
 			if (!age) {
 				who5 = [3,3,3,3,3];
 			}
-		socket.on("frontend to backend", (points, who5, sprite, color) => {
-			console.log("frontend to backend", points, who5, sprite, color);
+			console.log("frontend to backend", who5, sprite, color, age);
 			let data = { points: points, who5: who5, sprite: sprite, color: color };
 			client.LPUSH(process.env.REDIS_KEY, JSON.stringify(data));
 		});
