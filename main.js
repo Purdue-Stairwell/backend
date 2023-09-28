@@ -30,10 +30,13 @@ async function init() {
 		socket.on("frontend to backend", (points, who5, sprite, color, age) => {
 			if (!age) {
 				who5 = [3,3,3,3,3];
+			} else {
+				client.LPUSH("who5", JSON.stringify({who5: who5}));
 			}
 			console.log("frontend to backend", who5, sprite, color, age);
 			let data = { points: points, who5: who5, sprite: sprite, color: color };
 			client.LPUSH(process.env.REDIS_KEY, JSON.stringify(data));
+			
 		});
 	});
 
@@ -53,8 +56,6 @@ async function popFormData() {
 		console.log("Sent to Visual");
 		//grab data from database
 		let data = JSON.parse(await client.RPOP(process.env.REDIS_KEY));
-		//REMOVE BEFORE PUSH, JUST FOR TESTING -----------------------------------------------------------------------------###############
-		client.LPUSH(process.env.REDIS_KEY, JSON.stringify(data));
 		//emit to clients
 		io.emit("backend to visual", data.points, data.who5, data.sprite, data.color);
 
