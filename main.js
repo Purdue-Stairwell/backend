@@ -27,14 +27,14 @@ async function init() {
 	io.on("connection", (socket) => {
 		console.log("client connected");
 
-		socket.on("frontend to backend", (points, who5, sprite, color, age) => {
+		socket.on("frontend to backend", (points, who5, sprite, color, age, base) => {
 			if (!age) {
 				who5 = [3,3,3,3,3];
 			} else {
 				client.LPUSH("who5", JSON.stringify({who5: who5}));
 			}
 			console.log("frontend to backend", who5, sprite, color, age);
-			let data = { points: points, who5: who5, sprite: sprite, color: color };
+			let data = { points: points, who5: who5, sprite: sprite, color: color, base: base };
 			client.LPUSH(process.env.REDIS_KEY, JSON.stringify(data));
 			
 		});
@@ -57,7 +57,7 @@ async function popFormData() {
 		//grab data from database
 		let data = JSON.parse(await client.RPOP(process.env.REDIS_KEY));
 		//emit to clients
-		io.emit("backend to visual", data.points, data.who5, data.sprite, data.color);
+		io.emit("backend to visual", data.points, data.who5, data.sprite, data.color, data.base);
 
 		//adjust interval to match amount of data
 		if (dataCount > minData) {
